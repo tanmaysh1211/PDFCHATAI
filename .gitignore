@@ -1,0 +1,38 @@
+# ── Python (ai-service) ───────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+venv/
+.venv/
+env/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+faiss_index/
+
+# ── Node.js (backend + frontend) ──────────────────────
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# ── React build output ────────────────────────────────
+frontend/build/
+
+# ── Uploaded files (temp storage) ────────────────────
+backend/uploads/
+
+# ── Environment variables (NEVER commit these) ────────
+.env
+*.env
+
+# ── OS files ──────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Editor ────────────────────────────────────────────
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
