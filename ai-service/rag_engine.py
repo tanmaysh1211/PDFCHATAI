@@ -69,10 +69,14 @@ class RAGEngine:
         faiss.normalize_L2(query_embedding)
         
         distances, indices = self.index.search(query_embedding, k)
+        print("\nQUESTION:", query)
+        print("DISTANCES:", distances)
+        print("INDICES:", indices)
         
         results = []
         for dist, idx in zip(distances[0], indices[0]):
-            if idx >= 0 and dist > 0.3:  # Relevance threshold
+            # if idx >= 0 and dist > 0.3:  # Relevance threshold
+            if idx >=0:
                 chunk = self.chunks[idx]
                 results.append({
                     **chunk,
@@ -154,11 +158,15 @@ Please answer based on the context above. If referring to previous conversation,
         # Find relevant chunks
         relevant_chunks = self._similarity_search(question, k=5)
         
-        if not relevant_chunks:
-            # Try broader search
-            relevant_chunks = self._similarity_search(question, k=3)
+        # if not relevant_chunks:
+        #     # Try broader search
+        #     relevant_chunks = self._similarity_search(question, k=3)
+        print("RELEVANT CHUNKS FOUND:", len(relevant_chunks))
 
         context = self._build_context(relevant_chunks) if relevant_chunks else "No relevant content found."
+        print("\n===== CONTEXT =====")
+        print(context[:2000])      # first 2000 chars
+        print("\n===== END CONTEXT =====")
         messages = self._build_messages(question, context, chat_history)
 
         # Call GPT-4o Mini

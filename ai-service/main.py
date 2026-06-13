@@ -67,6 +67,9 @@ async def process_pdfs(
         processor = PDFProcessor()
         chunks = processor.process_pdfs(pdf_paths)
 
+        print("SESSION:", session_id)
+        print("CHUNKS:", len(chunks))
+
         if not chunks:
             raise HTTPException(status_code=400, detail="No text could be extracted from PDFs")
 
@@ -89,7 +92,10 @@ async def process_pdfs(
 @app.post("/ask", response_model=QuestionResponse)
 async def ask_question(request: QuestionRequest):
     """Ask a question about the uploaded PDFs"""
+    print("ASK SESSION:", request.session_id)
     engine = rag_engines.get(request.session_id)
+    print("ENGINE FOUND:", engine is not None)
+    # engine = rag_engines.get(request.session_id)
     
     if not engine:
         raise HTTPException(
